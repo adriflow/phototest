@@ -1,0 +1,16 @@
+build:
+  webhook: https://github.com/{owner}/{repo}/deployments/{id}
+
+compatibility_date = "2024-01-01"
+
+[site]
+  bucket = "./dist/frontend/browser"
+  build_command = "pnpm install && pnpm run build"
+  build_output = "dist/frontend/browser"
+  build_cwd = "frontend"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://{your-app-name}.fly.dev/api/*"
+  status = 200
+  force = false

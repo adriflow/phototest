@@ -1,10 +1,19 @@
-# Backend
+# phototest
+Para validar y hacer pruebas sobre despliegue sencillo
+
+# Desarrollo local
+
+## Backend
+```bash
 cd backend
 pnpm install
-cp .env.example .env  # Edit with your Supabase DATABASE_URL
+cp .env.example .env  # Editar con tu DATABASE_URL de Supabase
 pnpm run start:dev
+```
 
-# Frontend
+## Frontend
+```bash
 cd frontend
 pnpm install
 pnpm run start
+```
