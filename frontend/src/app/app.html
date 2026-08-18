@@ -1,0 +1,82 @@
+<div class="container">
+  <header>
+    <h1>Photo Gallery</h1>
+  </header>
+
+  @if (errorMsg()) {
+    <div class="error">{{ errorMsg() }}</div>
+  }
+
+  <section class="upload-section">
+    <h2>Upload a Photo</h2>
+
+    <div
+      class="dropzone"
+      [class.drag-over]="dragOver()"
+      [class.has-preview]="previewUrl()"
+      (drop)="onDrop($event)"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+      (click)="fileInput.click()"
+    >
+      @if (previewUrl()) {
+        <img [src]="previewUrl()" alt="Preview" class="preview" />
+        <p class="drop-text">Click to change</p>
+      } @else {
+        <p class="drop-text">Drag & drop an image here or click to select</p>
+      }
+      <input
+        #fileInput
+        type="file"
+        accept="image/jpeg,image/png,image/gif,image/webp"
+        (change)="onFileSelected($event)"
+        hidden
+      />
+    </div>
+
+    <div class="form-fields">
+      <input
+        type="text"
+        placeholder="Title (required)"
+        [ngModel]="title()"
+        (ngModelChange)="title.set($event)"
+        class="input-title"
+      />
+      <textarea
+        placeholder="Description (optional)"
+        [ngModel]="description()"
+        (ngModelChange)="description.set($event)"
+        rows="3"
+      ></textarea>
+      <button
+        (click)="upload()"
+        [disabled]="!title() || !selectedFile() || uploading()"
+        class="btn-upload"
+      >
+        {{ uploading() ? 'Uploading...' : 'Upload' }}
+      </button>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <h2>Gallery</h2>
+    @if (photos().length === 0) {
+      <p class="empty">No photos yet. Upload one above!</p>
+    }
+    <div class="grid">
+      @for (photo of photos(); track photo.id) {
+        <div class="card">
+          <img [src]="photo.imageUrl" [alt]="photo.title" />
+          <div class="card-body">
+            <h3>{{ photo.title }}</h3>
+            @if (photo.description) {
+              <p>{{ photo.description }}</p>
+            }
+            <span class="date">{{ photo.createdAt | date:'medium' }}</span>
+            <button class="btn-delete" (click)="deletePhoto(photo.id)">Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</div>
