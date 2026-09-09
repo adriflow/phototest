@@ -1,82 +1,377 @@
-<div class="container">
-  <header>
-    <h1>Photo Gallery</h1>
+<div class="landing-page">
+  <!-- Navigation Header -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+          <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+        <span class="brand-text">PhotoVault</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#features">Características</a>
+        <a href="#showcase">Galería</a>
+        <a href="#upload">Probar Ahora</a>
+        <a href="#pricing">Planes</a>
+      </nav>
+
+      <a href="#upload" class="btn btn-primary nav-cta">Empezar Gratis</a>
+    </div>
   </header>
 
-  @if (errorMsg()) {
-    <div class="error">{{ errorMsg() }}</div>
-  }
-
-  <section class="upload-section">
-    <h2>Upload a Photo</h2>
-
-    <div
-      class="dropzone"
-      [class.drag-over]="dragOver()"
-      [class.has-preview]="previewUrl()"
-      (drop)="onDrop($event)"
-      (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave()"
-      (click)="fileInput.click()"
-    >
-      @if (previewUrl()) {
-        <img [src]="previewUrl()" alt="Preview" class="preview" />
-        <p class="drop-text">Click to change</p>
-      } @else {
-        <p class="drop-text">Drag & drop an image here or click to select</p>
-      }
-      <input
-        #fileInput
-        type="file"
-        accept="image/jpeg,image/png,image/gif,image/webp"
-        (change)="onFileSelected($event)"
-        hidden
-      />
-    </div>
-
-    <div class="form-fields">
-      <input
-        type="text"
-        placeholder="Title (required)"
-        [ngModel]="title()"
-        (ngModelChange)="title.set($event)"
-        class="input-title"
-      />
-      <textarea
-        placeholder="Description (optional)"
-        [ngModel]="description()"
-        (ngModelChange)="description.set($event)"
-        rows="3"
-      ></textarea>
-      <button
-        (click)="upload()"
-        [disabled]="!title() || !selectedFile() || uploading()"
-        class="btn-upload"
-      >
-        {{ uploading() ? 'Uploading...' : 'Upload' }}
-      </button>
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <span class="badge">🚀 Nueva Generación de Galerías Cloud</span>
+        <h1 class="hero-title">Gestión y Almacenamiento Inteligente para tus Fotografías</h1>
+        <p class="hero-subtitle">
+          Sube, organiza y comparte tus fotos en alta resolución con la velocidad y seguridad que tu contenido merece.
+        </p>
+        <div class="hero-actions">
+          <a href="#upload" class="btn btn-primary btn-lg">Subir mi primera Foto</a>
+          <a href="#features" class="btn btn-outline btn-lg">Explorar Funcionalidades</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Seguridad Garantizada</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">⚡ &lt;1s</span>
+            <span class="stat-label">Carga Ultrarrápida</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">4K</span>
+            <span class="stat-label">Soporte Calidad Máxima</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-card-preview">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Paisaje de naturaleza" class="hero-img" />
+          <div class="hero-card-overlay">
+            <h3>Atardecer Alpino</h3>
+            <p>Fotografía por PhotoVault Community</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="gallery">
-    <h2>Gallery</h2>
-    @if (photos().length === 0) {
-      <p class="empty">No photos yet. Upload one above!</p>
-    }
-    <div class="grid">
-      @for (photo of photos(); track photo.id) {
-        <div class="card">
-          <img [src]="photo.imageUrl" [alt]="photo.title" />
-          <div class="card-body">
-            <h3>{{ photo.title }}</h3>
-            @if (photo.description) {
-              <p>{{ photo.description }}</p>
-            }
-            <span class="date">{{ photo.createdAt | date:'medium' }}</span>
-            <button class="btn-delete" (click)="deletePhoto(photo.id)">Delete</button>
+  <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Todo lo que necesitas para tus imágenes</h2>
+        <p>Una plataforma diseñada para fotógrafos, creadores de contenido y entusiastas.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
           </div>
+          <h3>Subida Drag & Drop</h3>
+          <p>Arrastra cualquier imagen JPG, PNG, WebP o GIF y súbela en cuestión de segundos directamente desde tu navegador.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3>Galería Dinámica</h3>
+          <p>Visualiza tus recuerdos con una interfaz limpia, tarjetas interactivas y fechas automatizadas.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3>Almacenamiento Seguro</h3>
+          <p>Infraestructura optimizada con conexión segura a base de datos y procesamiento en tiempo real.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="10 8 16 12 10 16 10 8"></polygon>
+            </svg>
+          </div>
+          <h3>Optimización de Calidad</h3>
+          <p>Tus fotografías conservan la riqueza de sus colores y detalles sin sacrificar la velocidad de renderizado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upload Interactive Section -->
+  <section id="upload" class="upload-interactive-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Prueba la Experiencia en Vivo</h2>
+        <p>Sube una fotografía ahora mismo y mira lo rápido que aparece en tu galería interactiva.</p>
+      </div>
+
+      @if (errorMsg()) {
+        <div class="alert alert-error">
+          <span>{{ errorMsg() }}</span>
+          <button (click)="dismissError()" class="alert-close">&times;</button>
+        </div>
+      }
+
+      @if (successMsg()) {
+        <div class="alert alert-success">
+          <span>{{ successMsg() }}</span>
+        </div>
+      }
+
+      <div class="upload-card">
+        <div
+          class="dropzone"
+          [class.drag-over]="dragOver()"
+          [class.has-preview]="previewUrl()"
+          (drop)="onDrop($event)"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave()"
+          (click)="fileInput.click()"
+        >
+          @if (previewUrl()) {
+            <div class="preview-wrapper">
+              <img [src]="previewUrl()" alt="Vista previa de imagen" class="preview-img" />
+              <div class="preview-badge">Imagen lista</div>
+            </div>
+            <p class="drop-text">Haz clic para cambiar la imagen seleccionada</p>
+          } @else {
+            <div class="dropzone-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <p class="drop-text-main">Arrastra y suelta tu imagen aquí</p>
+            <p class="drop-text-sub">o haz clic para explorar en tu dispositivo (Máx 5MB: JPG, PNG, WebP, GIF)</p>
+          }
+          <input
+            #fileInput
+            type="file"
+            accept="image/jpeg,image/png,image/gif,image/webp"
+            (change)="onFileSelected($event)"
+            hidden
+          />
+        </div>
+
+        <div class="form-fields">
+          <div class="input-group">
+            <label for="title">Título de la fotografía *</label>
+            <input
+              id="title"
+              type="text"
+              placeholder="Ej: Atardecer en la montaña"
+              [ngModel]="title()"
+              (ngModelChange)="title.set($event)"
+              class="input-control"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="description">Descripción (Opcional)</label>
+            <textarea
+              id="description"
+              placeholder="Escribe una pequeña historia o detalles de la captura..."
+              [ngModel]="description()"
+              (ngModelChange)="description.set($event)"
+              rows="3"
+              class="input-control"
+            ></textarea>
+          </div>
+
+          <button
+            (click)="upload()"
+            [disabled]="!title() || !selectedFile() || uploading()"
+            class="btn btn-primary btn-block"
+          >
+            @if (uploading()) {
+              <span class="spinner"></span>
+              <span>Subiendo fotografía...</span>
+            } @else {
+              <span>Publicar en la Galería</span>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Gallery Section -->
+  <section id="showcase" class="showcase-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Galería Reciente</h2>
+        <p>Explora las últimas fotos subidas a la plataforma en tiempo real.</p>
+      </div>
+
+      @if (photos().length === 0) {
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          <h3>Aún no hay fotografías</h3>
+          <p>Sé el primero en subir una foto usando la sección de arriba.</p>
+          <a href="#upload" class="btn btn-outline">Subir Foto Ahora</a>
+        </div>
+      } @else {
+        <div class="gallery-grid">
+          @for (photo of photos(); track photo.id) {
+            <article class="photo-card">
+              <div class="photo-card-image">
+                <img [src]="photo.imageUrl" [alt]="photo.title" loading="lazy" />
+              </div>
+              <div class="photo-card-body">
+                <div class="photo-header">
+                  <h3>{{ photo.title }}</h3>
+                  <button class="btn-delete" (click)="deletePhoto(photo.id)" title="Eliminar foto">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                  </button>
+                </div>
+                @if (photo.description) {
+                  <p class="photo-desc">{{ photo.description }}</p>
+                }
+                <div class="photo-footer">
+                  <span class="photo-date">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    {{ photo.createdAt | date:'mediumDate' }}
+                  </span>
+                </div>
+              </div>
+            </article>
+          }
         </div>
       }
     </div>
   </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Planes de Almacenamiento</h2>
+        <p>Selecciona la opción perfecta para tus proyectos personales o profesionales.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Starter</h3>
+            <div class="price">$0 <span>/ mes</span></div>
+            <p>Ideal para probar la plataforma y almacenar fotos de uso diario.</p>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ Hasta 5 GB de almacenamiento</li>
+            <li>✓ Cargas simultáneas ilimitadas</li>
+            <li>✓ Calidad Estándar HD</li>
+            <li>✓ Soporte comunitario</li>
+          </ul>
+          <a href="#upload" class="btn btn-outline btn-block">Comenzar Gratis</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="popular-badge">Más Popular</div>
+          <div class="pricing-header">
+            <h3>Pro Creator</h3>
+            <div class="price">$9.99 <span>/ mes</span></div>
+            <p>Para fotógrafos profesionales y creadores que necesitan máxima resolución.</p>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ 500 GB de almacenamiento Cloud</li>
+            <li>✓ Calidad 4K sin compresión</li>
+            <li>✓ Enlaces privados y contraseñas</li>
+            <li>✓ Soporte prioritario 24/7</li>
+          </ul>
+          <a href="#upload" class="btn btn-primary btn-block">Probar 14 días Gratis</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Enterprise</h3>
+            <div class="price">$29.99 <span>/ mes</span></div>
+            <p>Para agencias y equipos con necesidades de gran escala.</p>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ Almacenamiento Ilimitado</li>
+            <li>✓ API REST de alta velocidad dedicada</li>
+            <li>✓ Colaboradores ilimitados</li>
+            <li>✓ CDN global dedicado</li>
+          </ul>
+          <a href="#upload" class="btn btn-outline btn-block">Contactar Ventas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <div class="brand">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          <span class="brand-text">PhotoVault</span>
+        </div>
+        <p>Tu plataforma moderna para la gestión y publicación de imágenes cloud.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <a href="#hero">Inicio</a>
+          <a href="#features">Características</a>
+          <a href="#showcase">Galería</a>
+          <a href="#pricing">Planes</a>
+        </div>
+        <div class="footer-col">
+          <h4>Recursos</h4>
+          <a href="#">Documentación API</a>
+          <a href="#">Estado del servicio</a>
+          <a href="#">Guía de uso</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacidad</a>
+          <a href="#">Términos de servicio</a>
+          <a href="#">Contacto</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 PhotoVault. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
 </div>
